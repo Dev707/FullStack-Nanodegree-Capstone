@@ -1079,7 +1079,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"The Matrix 4\",\r\n    \"release_date\":\"2012-04-23\"\r\n\r\n}"
+							"raw": "{\r\n    \"title\":\"The Matrix 2\",\r\n    \"release_date\":\"2019-04-23\"\r\n\r\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/movies",

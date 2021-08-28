@@ -3,14 +3,15 @@ from sqlalchemy import Column, String, Integer, Date, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
-DB_USER = os.getenv('DB_USER', 'postgres')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
-DB_NAME = os.getenv('DB_NAME', 'capstone')
+#DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
+#DB_USER = os.getenv('DB_USER', 'postgres')
+#DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
+#DB_NAME = os.getenv('DB_NAME', 'capstone')
 
-database_path = 'postgresql://{}:{}@{}/{}'.format(
-    DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
-
+#database_path = 'postgresql://{}:{}@{}/{}'.format(
+    #DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
+    
+database_path = os.environ['DATABASE_URL']
 db = SQLAlchemy()
 
 '''
