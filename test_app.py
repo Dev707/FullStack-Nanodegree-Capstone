@@ -15,11 +15,12 @@ class CapstoneTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.casting_assistant = os.environ['casting_assistant']
-        self.casting_director = os.environ['casting_director']
-        self.executive_producer = os.environ['executive_producer']
-        self.database_name = "capstone_test"
-        self.database_path = os.environ['DATABASE_URL']
+        self.DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
+        self.DB_USER = os.getenv('DB_USER', 'postgres')
+        self.DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
+        self.DB_NAME = os.getenv('DB_NAME', 'capstone_test')
+        self.database_path = 'postgresql://{}:{}@{}/{}'.format(
+            self.DB_USER, self.DB_PASSWORD, self.DB_HOST, self.DB_NAME)
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -29,13 +30,22 @@ class CapstoneTestCase(unittest.TestCase):
             # create all tables
             self.db.create_all()
 
+    casting_assistant = format(os.environ.get('casting_assistant'))
+    casting_director = format(os.environ.get('casting_director'))
+    executive_producer = format(os.environ.get('executive_producer'))
+
     def tearDown(self):
         """Executed after reach test"""
         pass
 
+    """
+    TODO
+    Write at least one test for each test for successful operation
+    and for expected errors.
+    """
 # -------------------------------------------------------------------------------------------------
 
-    def test_api_call_without_token(self):
+    def test_api_without_token(self):
 
         response = self.client().get('/actors')
         data = json.loads(response.data)
@@ -48,11 +58,11 @@ class CapstoneTestCase(unittest.TestCase):
     RBAC test
     '''
 
-    def test_insert_movie_with_unauthorized_token_permission(self):
+    def test_to_insert_new_movie_without_permission(self):
         movie_dict = {
 
-            'title': 'The Matrix 4',
-            'release_date': '2022-12-12'
+            'title': 'Tom and Jerry',
+            'release_date': '2021-11-15'
         }
 
         response = self.client().post('/movies',
@@ -66,7 +76,7 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'unauthorized')
 
-    def test_delete_actor_with_unautorized_token_permission(self):
+    def test_to_delete_actor_without_permission(self):
 
         response = self.client().delete('/actors/1',
                                         headers={'Authorization': "Bearer {}".
@@ -81,7 +91,7 @@ class CapstoneTestCase(unittest.TestCase):
     Success Behavior Actors End Points
     '''
 
-    def test_get_all_actors(self):
+    def test_to_get_all_actors(self):
 
         response = self.client().get(
             '/actors',
@@ -94,12 +104,12 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def test_insert_actor(self):
+    def test_to_insert_new_actor(self):
 
         actor_dict = {
 
-            'name': 'Will Smith',
-            'age': 49
+            'name': 'Mjeed jerry',
+            'age': 12
         }
 
         response = self.client().post('/actors', headers={
@@ -112,30 +122,30 @@ class CapstoneTestCase(unittest.TestCase):
 
         self.assertEqual(data['success'], True)
 
-    def test_edit_actor(self):
+    def test_to_edit_actor(self):
 
         response = self.client().patch('/actors/1',
                                        headers={'Authorization': "Bearer {}".
                                                 format(self.casting_director)
-                                                }, json={'name': 'Neo Martin'}
+                                                }, json={'name': 'Mr Khalid'}
                                        )
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def error_404_test_edit_actor(self):
+    def test_edit_actor_not_exiest(self):
 
-        response = self.client().patch('/actors/999',
+        response = self.client().patch('/actors/222',
                                        headers={'Authorization': "Bearer {}".
                                                 format(self.casting_director)
-                                                }, json={'name': 'Neo Martin'}
+                                                }, json={'name': 'Mr Khalid'}
                                        )
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 404)
 
-    def test_delete_actor(self):
+    def test_to_delete_actor(self):
 
         response = self.client().delete('/actors/1',
                                         headers={'Authorization': "Bearer {}".
@@ -150,18 +160,20 @@ class CapstoneTestCase(unittest.TestCase):
 
     def error_404_test_delete_actor(self):
 
-        response = self.client().delete('/actors/999',
+        response = self.client().delete('/actors/222',
                                         headers={'Authorization': "Bearer {}".
                                                  format(self.casting_director)
                                                  })
 
-        deleted_actor = Actor.query.filter_by(id=999).one_or_none()
+        deleted_actor = Actor.query.filter_by(id=222).one_or_none()
 
         self.assertEqual(response.status_code, 404)
 
-# -------------------------------------------------------------------------------------------------
+    """
+    Test API endpoint for movies
+    """
 
-    def test_get_all_movies(self):
+    def test_to_get_all_movies(self):
 
         response = self.client().get(
             '/movies', headers={'Authorization': "Bearer {}".
@@ -173,11 +185,11 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def test_insert_movie(self):
+    def test_to_insert_movie(self):
         movie_dict = {
 
-            'title': 'The Matrix 4',
-            'release_date': '2022-12-12'
+            'title': 'FCIT 2021',
+            'release_date': '2021-08-28'
         }
 
         response = self.client().post('/movies', headers={
@@ -196,24 +208,24 @@ class CapstoneTestCase(unittest.TestCase):
                                        headers={
                                            'Authorization': "Bearer {}".
                                            format(self.casting_director)},
-                                       json={'title': 'interstellar 2'})
+                                       json={'title': 'hola mola'})
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def error_404_test_edit_movie(self):
+    def test_to_edit_movie_not_exiest(self):
 
         response = self.client().patch('/movies/999',
                                        headers={
                                            'Authorization': "Bearer {}".
                                            format(self.casting_director)},
-                                       json={'title': 'interstellar 2'})
+                                       json={'title': 'hola mola'})
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 404)
 
-    def test_delete_movie(self):
+    def test_to_delete_movie(self):
 
         response = self.client().delete('/movies/1', headers={
             'Authorization': "Bearer {}".format(self.executive_producer)})
@@ -225,10 +237,10 @@ class CapstoneTestCase(unittest.TestCase):
 
     def error_404_test_delete_movie(self):
 
-        response = self.client().delete('/movies/999', headers={
+        response = self.client().delete('/movies/222', headers={
             'Authorization': "Bearer {}".format(self.executive_producer)})
 
-        deleted_movie = Movie.query.filter_by(id=999).one_or_none()
+        deleted_movie = Movie.query.filter_by(id=222).one_or_none()
 
         self.assertEqual(response.status_code, 404)
 

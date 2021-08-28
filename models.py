@@ -3,21 +3,20 @@ from sqlalchemy import Column, String, Integer, Date, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-#DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
-#DB_USER = os.getenv('DB_USER', 'postgres')
-#DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
-#DB_NAME = os.getenv('DB_NAME', 'capstone')
+DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
+DB_NAME = os.getenv('DB_NAME', 'capstone')
 
-#database_path = 'postgresql://{}:{}@{}/{}'.format(DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
+database_path = 'postgresql://{}:{}@{}/{}'.format(
+    DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 
-database_path = os.environ['DATABASE_URL']
 db = SQLAlchemy()
 
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
-
 
 def setup_db(app, database_path=database_path):
 
@@ -29,11 +28,19 @@ def setup_db(app, database_path=database_path):
 
 
 '''
-Movies
-Movies with attributes title and release date
-
+db_drop_and_create_all()
+    drops the database tables and starts fresh
+    can be used to initialize a clean database
+    !!NOTE you can change the database_filename variable to have multiple verisons of a database
 '''
 
+def db_drop_and_create_all():
+    db.drop_all()
+    db.create_all()
+
+'''
+Movies
+'''
 
 class Movie(db.Model):
 
@@ -42,7 +49,6 @@ class Movie(db.Model):
     release_date = Column(Date)
 
     def __init__(self, title, release_date):
-
         self.title = title
         self.release_date = release_date
 
@@ -67,8 +73,6 @@ class Movie(db.Model):
 
 '''
 Actors
-Actors with attributes name, age and gender
-
 '''
 
 
@@ -79,7 +83,6 @@ class Actor(db.Model):
     age = Column(Integer)
 
     def __init__(self, name, age):
-
         self.name = name
         self.age = age
 
@@ -96,7 +99,6 @@ class Actor(db.Model):
 
     def format(self):
         return {
-
             'id': self.id,
             'name': self.name,
             'age': self.age,

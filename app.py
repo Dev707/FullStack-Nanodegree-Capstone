@@ -3,7 +3,7 @@ import os
 import re
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
-from models import setup_db, Movie, Actor
+from models import setup_db, Movie, Actor, db_drop_and_create_all
 from auth import AuthError, requires_auth
 
 
@@ -13,12 +13,22 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
 
-    # allow resource sharing in all domain parts
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    db_drop_and_create_all()
 
+    '''
+    Set up CORS(Cross Origin Resource Sharing).
+    Allow '*' for all origins.
+    Delete the sample route after implementing the API endpoints
+    '''
+
+    CORS(app, resources={"/": {"origin": "*"}})
+
+    '''
+    CORS Headers. Use the after_request decorator
+    to set Access-Control-Allow
+    '''
     @app.after_request
     def after_request(response):
-
         response.headers.add('Access-Control-Allow-Headers',
                              'Content-Type,Authorization')
         response.headers.add('Access-Control-Allow-Methods',
@@ -27,204 +37,201 @@ def create_app(test_config=None):
         return response
 
     '''
-    GET Actors endpoint
-    Fetch all actrors from database
+    @Implement endpoint
+    GET /actors
+        it should require the 'get:actors' permission
+    returns status code 200 and json {"success": True, "actors": actors}
+        where actors is the list of actors
     '''
+
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
     def get_actors(payload):
-        # fetch data from database
         actors = Actor.query.all()
-        # return json response
         return jsonify({
             'success': True,
             'actors': [actor.format() for actor in actors]
         }), 200
 
     '''
-    DELETE Actor endpoint
-    delete an actor from endpoint with given id
+    @Implement delete endpoint
+    DELETE /actors/<id>
+        where <id> is the existing actor id
+        it should require the 'delete:actors' permission
+    returns status code 200 and json {"success": True, "delete": id}
+        where id is the id of the deleted record
     '''
+
     @app.route('/actors/<int:id>', methods=['DELETE'])
     @requires_auth('delete:actor')
     def delete_actor(payload, id):
-        # fetch data from db
-        actor = Actor.query.filter_by(id=id).one_or_none()
-        # check if there is any data fetched from db
-        if actor is None:
+        actor = Actor.query.filter(Actor.id == id).one_or_none()
+        if actor:
+            try:
+                actor.delete()
+                return jsonify({
+                    'success': True,
+                    'delete': id,
+                })
+            except BaseException:
+                abort(422)
+        else:
             abort(404)
-        # delete actor from db
-        actor.delete()
-        # return json response
-        return jsonify({
-            'success': True,
-            'actor_id': actor.format()
-        }), 200
 
     '''
-    POST Actor Endpoint
-    Create an actor and store it in db
+    @Implement endpoint
+    POST /actors
+        it should require the 'post:actors' permission
+    returns status code 200 and json {"success": True, "actor": actor}
+        where actor is an array containing only the newly created actor
     '''
+
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actor')
     def add_actor(payload):
-
-        # fetch raw data
         body = request.get_json()
-
         new_name = body['name']
         new_age = body['age']
-
-        # create an object with fetched data from body and insert it to db
         actor = Actor(name=new_name, age=new_age)
         actor.insert()
-        # return json response
         return jsonify({
             'success': True,
             'actor': actor.format()
         }), 200
 
     '''
-    PATCH Actors endpoint
-    Edit Actors from db with given id
+    @Implement endpoint
+    PATCH /actors/<id>
+        where <id> is the existing actor id
+        it should update the corresponding row for <id>
+        it should require the 'patch:actors' permission
+    returns status code 200 and json {"success": True, "actor": actor}
+        where movie an array containing only the updated actor
     '''
+
     @app.route('/actors/<int:id>', methods=['PATCH'])
     @requires_auth('patch:actor')
     def modify_actor(payload, id):
-
-        # Check if the record is available in db with given id
         actor = Actor.query.filter_by(id=id).one_or_none()
-
-        # Check the record is not none
         if actor is None:
             abort(404)
-        # fetch raw data
         body = request.get_json()
-
         try:
-
             body_name = body.get('name')
             body_age = body.get('age')
-            # if body_name is not Null update the record in db
             if body_name:
                 actor.name = body_name
-            # if body_age is not Null update the record in db
             if body_age:
                 actor.age = body_age
-
             actor.update()
-
         except Exception:
             abort(400)
-
-        # return json response
         return jsonify({
-
             'success': True,
             'actor.id': actor.id
-
         }), 200
+
     '''
-    GET movies endpoint
-    Fetches data from db
+    @Implement endpoint
+    GET /movies
+        it should require the 'get:movies' permission
+    returns status code 200 and json {"success": True, "movies": movies}
+        where movies is the list of movies
     '''
+
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(payload):
-        # fetch data from db
         movies = Movie.query.all()
-        # return json response with fetched data from db
         return jsonify({
             'success': True,
             'movies': [movie.format() for movie in movies]
         }), 200
 
     '''
-    DELETE movie endpoint
-    Delete record form db with given id
-    '''
-    @app.route('/movies/<int:id>', methods=['DELETE'])
-    def delete_movie(id):
-        # search for movie
-        movie = Movie.query.filter_by(id=id).one_or_none()
-        # if movie not found from db abort 404
-        if movie is None:
-            abort(404)
-
-        # if the given id was in db , delete it from db
-        movie.delete()
-        # return json response
-        return jsonify({
-            'success': True,
-            'movie': movie.format()
-        }), 200
-
-    '''
-    POST movies
-    Allow you to create a movie and then stores it in db
+    @Implement endpoint
+    POST /movies
+        it should require the 'post:movies' permission
+    returns status code 200 and json {"success": True, "movie": movie}
+        where movie is an array containing only the newly created movie
     '''
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movie')
     def add_movie(payload):
-        # fetch raw data
         body = request.get_json()
-
         new_title = body['title']
         new_release_date = body['release_date']
-        # create a new object from raw data
         movie = Movie(title=new_title, release_date=new_release_date)
-        # insert the object in db
         movie.insert()
-        # return json response
         return jsonify({
             'success': True,
             'movie': movie.format()
         }), 200
+
     '''
-    PATCH Movie
-    Allow you to change fields in DB
+    @Implement endpoint
+    PATCH /movies/<id>
+        where <id> is the existing movie id
+        it should respond with a 404 error if <id> is not found
+        it should require the 'patch:movies' permission
+    returns status code 200 and json {"success": True, "movie": movie}
+        where movie an array containing only the updated movie
     '''
+
     @app.route('/movies/<int:id>', methods=['PATCH'])
     @requires_auth('patch:movie')
     def modify_movie(payload, id):
-        # search in db by the given id
         movie = Movie.query.filter_by(id=id).one_or_none()
-
-        # check if the movie is in the db
         if movie is None:
             abort(404)
-        # fetch raw data
         body = request.get_json()
-
         try:
-
             body_title = body.get('title')
             body_release_date = body.get('release_date')
-            # if title was changed from front update the db with the new value
             if body_title:
                 movie.name = body_title
-            # if release_date was from front update the db with new value
             if body_release_date:
                 movie.age = body_release_date
-            # commit updates
             movie.update()
 
         except Exception:
             abort(400)
 
-        # return json response
         return jsonify({
-
             'success': True,
-            'movie.id': movie.id
-
+            'movie': movie.id
         }), 200
 
     '''
-  Error Handler
+    @Implement endpoint
+    DELETE /movies/<id>
+        where <id> is the existing movie id
+        it should delete the corresponding row for <id>
+        it should require the 'delete:movies' permission
+    returns status code 200 and json {"success": True, "delete": id}
+        where id is the id of the deleted record
+    '''
+    @app.route('/movies/<int:id>', methods=['DELETE'])
+    @requires_auth('delete:movies')
+    def delete_movie(jwt, id):
+        movie = Movie.query.filter(Movie.id == id).one_or_none()
+        if movie:
+            try:
+                movie.delete()
+                return jsonify({
+                    'success': True,
+                    'delete': id,
+                })
+            except BaseException:
+                abort(422)
+        else:
+            abort(404)
 
-  '''
+    '''
+    Create error handlers for all expected errors
+    including 400, 404, 422 and 500.
+    '''
 
     @app.errorhandler(422)
     def unprocessable(error):
@@ -252,7 +259,6 @@ def create_app(test_config=None):
         }), 401
 
     return app
-
 
 app = create_app()
 
