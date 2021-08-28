@@ -15,12 +15,13 @@ class CapstoneTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
-        self.DB_USER = os.getenv('DB_USER', 'postgres')
-        self.DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
-        self.DB_NAME = os.getenv('DB_NAME', 'capstone_test')
-        self.database_path = 'postgresql://{}:{}@{}/{}'.format(
-            self.DB_USER, self.DB_PASSWORD, self.DB_HOST, self.DB_NAME)
+        #self.DB_HOST = os.getenv('DB_HOST', 'localhost:5432')
+        #self.DB_USER = os.getenv('DB_USER', 'postgres')
+        #self.DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin')
+        #self.DB_NAME = os.getenv('DB_NAME', 'capstone_test')
+        #self.database_path = 'postgresql://{}:{}@{}/{}'.format(
+        #    self.DB_USER, self.DB_PASSWORD, self.DB_HOST, self.DB_NAME)
+        self.database_path = os.environ['DATABASE_URL']
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
