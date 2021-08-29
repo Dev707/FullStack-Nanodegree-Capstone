@@ -13,7 +13,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
 
-    db_drop_and_create_all()
+    #db_drop_and_create_all()
 
     '''
     Set up CORS(Cross Origin Resource Sharing).
