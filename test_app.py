@@ -44,7 +44,10 @@ class CapstoneTestCase(unittest.TestCase):
     Write at least one test for each test for successful operation
     and for expected errors.
     """
-# -------------------------------------------------------------------------------------------------
+
+    '''
+    test api without token
+    '''
 
     def test_api_without_token(self):
 
@@ -91,20 +94,6 @@ class CapstoneTestCase(unittest.TestCase):
     '''
     Success Behavior Actors End Points
     '''
-
-    def test_to_get_all_actors(self):
-
-        response = self.client().get(
-            '/actors',
-            headers={'Authorization': "Bearer {}"
-                     .format(self.casting_assistant)
-                     })
-
-        data = json.loads(response.data)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['success'], True)
-
     def test_to_insert_new_actor(self):
 
         actor_dict = {
@@ -130,6 +119,19 @@ class CapstoneTestCase(unittest.TestCase):
                                                 format(self.casting_director)
                                                 }, json={'name': 'Mr Khalid'}
                                        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_to_get_all_actors(self):
+
+        response = self.client().get(
+            '/actors',
+            headers={'Authorization': "Bearer {}"
+                     .format(self.casting_assistant)
+                     })
+
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
@@ -173,19 +175,6 @@ class CapstoneTestCase(unittest.TestCase):
     """
     Test API endpoint for movies
     """
-
-    def test_to_get_all_movies(self):
-
-        response = self.client().get(
-            '/movies', headers={'Authorization': "Bearer {}".
-                                format(self.casting_assistant)
-                                })
-
-        data = json.loads(response.data)
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['success'], True)
-
     def test_to_insert_movie(self):
         movie_dict = {
 
@@ -203,13 +192,13 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
 
-    def test_edit_movie(self):
+    def test_to_get_all_movies(self):
 
-        response = self.client().patch('/movies/1',
-                                       headers={
-                                           'Authorization': "Bearer {}".
-                                           format(self.casting_director)},
-                                       json={'title': 'hola mola'})
+        response = self.client().get(
+            '/movies', headers={'Authorization': "Bearer {}".
+                                format(self.casting_assistant)
+                                })
+
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
@@ -236,6 +225,17 @@ class CapstoneTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(deleted_movie, None)
 
+    def test_edit_movie(self):
+
+        response = self.client().patch('/movies/1',
+                                       headers={
+                                           'Authorization': "Bearer {}".
+                                           format(self.casting_director)},
+                                       json={'title': 'hola mola'})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
     def error_404_test_delete_movie(self):
 
         response = self.client().delete('/movies/222', headers={
@@ -244,10 +244,6 @@ class CapstoneTestCase(unittest.TestCase):
         deleted_movie = Movie.query.filter_by(id=222).one_or_none()
 
         self.assertEqual(response.status_code, 404)
-
-
-# -------------------------------------------------------------------------------------------------
-
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

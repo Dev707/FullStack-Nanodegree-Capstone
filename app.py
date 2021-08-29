@@ -38,7 +38,8 @@ def create_app(test_config=None):
 
     @app.route('/')
     def index():
-        return render_template("index.html")
+        access_token = request.form['access_token']
+        return render_template("index.html", access_token=access_token)
 
     '''
     @Implement endpoint
