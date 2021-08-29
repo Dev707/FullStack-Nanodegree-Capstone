@@ -36,7 +36,7 @@ def create_app(test_config=None):
 
         return response
 
-    @app.route('/')
+    @app.route('/', methods=['GET'])
     def index():
         access_token = request.form['access_token']
         return render_template("index.html", access_token=access_token)
