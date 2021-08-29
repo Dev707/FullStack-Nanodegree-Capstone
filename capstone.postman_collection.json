@@ -400,7 +400,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTUxOWE4ZmM0YmEwMDcxZjBiNWFjIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAxNjM3ODksImV4cCI6MTYzMDI1MDE4OSwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.R8QSvPq4nFOaB4e00RC8RM4XeAaDfgqIYNRflHsrf9LQM9Wdo9vOcDny6QgisibJXGBpnbOsWhxWhDjME_FSLpMXvbMi42j4J-hY_-kEHr0KLTKla54jgJF50rmWA6pK5W2hBqz91AtdjZN1rH_GocDIHVbaMpNeWjtoimyGLdy4l30wYUL4uhn3BDC5_223F8toSPJgvt4YzYQSegQQ76KPPLt1Uo7f701v4AaFaIyfp1krIvET4zlB3y36CVEr6BxW6jQn7Pu4CJwvDbbjPEIH_mNF_qHbd76Qw1uHJaRDWMnjxSYJG1dgl9pDXCGbOZ8p7jeLkjq-JEq7CFp9AQ",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTUxOWE4ZmM0YmEwMDcxZjBiNWFjIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAyMDQwNDQsImV4cCI6MTYzMDI5MDQ0NCwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.b7DLOVebReIU9Vv4ixUTKlqymG5GNzoQ857T7H9Jsvkg6HTZ8su26eHS2ZaYhUcXL_dWh1w8a6iFF0HKi6RvjMt_1Y8NVwSIs1JiSGPC9hbx7ofKeQ9DYB7U3uO17kPfOv-7VEumJTKb36VBFg5W5mcTEypvsSpK40oDGN1I-LSzUALcga8FKckSGOipvwvG1F1kz_jElP_CT3nwUGcOl7N3nFZea7yFBKrGVYE2Uzp59CL79_AeLVIkrV5OEvX6QC4KHZSf6fCbNjsdRM-bGdzar5gmVdt71CKfsMhBJACgqKhLai3xVrFDKo19ZoMDTz1Vk_APLJIwf-Rt4Diidg",
 						"type": "string"
 					}
 				]
@@ -495,7 +495,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Abdullah MK\",\r\n    \"age\":15\r\n}"
+							"raw": "{\r\n    \"name\":\"Steve Jobs\",\r\n    \"age\":15\r\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/actors",
@@ -801,7 +801,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTZjZjZhYWFiMmYwMDZhZTA5NmZlIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAxNzA0ODYsImV4cCI6MTYzMDI1Njg4NiwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3IiLCJwYXRjaDptb3ZpZSIsInBvc3Q6YWN0b3IiXX0.jzJHnKxVOUXMZKbkpxa_y1YVuRi2s4IV4a5PHJbsUPjmE-2NXV4F16cFqQG22xCm_wRGSTm0I2c7LAsiaB2aedVjhAT7XfVrYDrLhxXYoqbebwHiAyMzjP_GRFS8SHO2o9trTH6GLfPJZfQ2PM_0H5KXdpp6_l3BUB-drx-TLtzMLQR1cjTQHisyWvSkDdLLh6jgM_s9bgcb4C03YzMgzC5VzHSjsYH0NAQ1impYBjqdJUVSSj4czfbPpzN83Ri4kA3onGy3KOOH8uh_N6xQ51FSl-BWcwLVuwSYhIx76gT1ejDNigfa8mLyuIoRV5a_UCZpP9Oq919t5_12XKagBg",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTZjZjZhYWFiMmYwMDZhZTA5NmZlIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAyMDQxMDQsImV4cCI6MTYzMDI5MDUwNCwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3IiLCJwYXRjaDptb3ZpZSIsInBvc3Q6YWN0b3IiXX0.Pzr1WM9ePGkjfmP5HrB2IUva6Yewp1c7QBN0KoyDagrFJvy5qEgfUFv-4kDBuIBe_cyOtkFfR3SP28SyNGTYgk48QBSDwPl5TOrLaD-xjTMZNYzyzoQ5SK9ddxI_qdgT87Qgtm_kevlqfH8VbhLCZCg88zNyTXZxxLXGlQACpsr_MtfNDWfRfk6NeHjJ5pvM21M0D0aVA_7V9kRWjJKEfwWlGXS9toRKN3CnH4Vtxh4DVdmKo03i4T9oUHhrw1_NxLrVj47rqMFU0L8Mx-I3ZwC8cjXn_qfj2NqdhKz9irqkcOKAppunnwjLZHZXIlKkn4SVnw0uzWo00OUdI3uKfA",
 						"type": "string"
 					}
 				]
@@ -957,7 +957,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"WophWoph\" \r\n}"
+							"raw": "{\r\n    \"name\":\"Mr Apple\" \r\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/actors/1",
@@ -1079,7 +1079,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"The Matrix 2\",\r\n    \"release_date\":\"2019-04-23\"\r\n\r\n}"
+							"raw": "{\r\n    \"title\":\"reminiscence\",\r\n    \"release_date\":\"2021-08-11\"\r\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/movies",
@@ -1140,7 +1140,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"WophWoph\" \r\n}"
+							"raw": "{\r\n    \"title\":\"Iphone movie\" \r\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/movies/1",
@@ -1202,7 +1202,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTZlZjdhYWFiMmYwMDZhZTA5NzVhIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAxNzA4OTQsImV4cCI6MTYzMDI1NzI5NCwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9yIiwicGF0Y2g6bW92aWUiLCJwb3N0OmFjdG9yIiwicG9zdDptb3ZpZSJdfQ.CllkByBDsA4YUwKTcSfM7uaow3ySH4VhTSz0g0PC9KShJFGaSPcbCOlSPvvAlesyGo1OmeI3lhug_se2m09D4dOe5wNUwRxMynHdzcRnyafz-a5DDpWl7DbXVkItULXvHnuqFpZW85JwczBfD0MquD-IaxyaO4x_bBde1gS6chsa6rHSnEt8rxTvTi-DJeKydNoOP90rsnfY8wMSkgla6aIoy9fYDoLSvwUbQIRxgQrm01PM4_qQ7e-W778a47nBTjE5XVlRsMJJB8khU-XQTRZmV8rjGxbBT0v8G7Ep7-kXXt1FlGy2KdePSOqWQafFM-8gYCUH3pMGJR5c1CFL1A",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtSdjhnWWM0d01SNFJFX3dITnBLWCJ9.eyJpc3MiOiJodHRwczovL2Rldi01bnN2LW1mbS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEyYTZlZjdhYWFiMmYwMDZhZTA5NzVhIiwiYXVkIjoiY2Fwc3RvbmUiLCJpYXQiOjE2MzAyMDQxNTYsImV4cCI6MTYzMDI5MDU1NiwiYXpwIjoiTW1hemtKRXFoYks5WGZhaUpHZkwxYk1ONlB1NG1vbmIiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvciIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9yIiwicGF0Y2g6bW92aWUiLCJwb3N0OmFjdG9yIiwicG9zdDptb3ZpZSJdfQ.cnzMDPJTgA7lxLOc4ovofRA8bTJIubashBwtYMprwNiBZjwUws08XSodeh7ckfCOCx8SmNmTjFk7NxMhtNDUnZMF2jbYm1ylHFyVZjVgarMqFKVBLfPp3OuKAHNLb0daa0gcjHdJtCxL7-BieoJ3powG7KJe1dRiswbvnRYdLjIIFWZ1GdCiCiOHN8vA7QpGjmt6fI-3nERvJBS1zurdHuWD7L7CGcJwdlWo0Q9BImbPF44PKhhWAKzhN7P-aOrGOgD5QSp9fExR78G9YWUgWFHOAM3E378TnppDaZRxE8s9m7FcMY29CkSaXqUhtB2yZnkZL6pOyfjvADQmij4_fQ",
 						"type": "string"
 					}
 				]
