@@ -36,10 +36,9 @@ def create_app(test_config=None):
 
         return response
 
-    @app.route('/', methods=['GET'])
+    @app.route('/')
     def index():
-        access_token = request.form['access_token']
-        return render_template("index.html", access_token=access_token)
+        return render_template("index.html")
 
     '''
     @Implement endpoint
